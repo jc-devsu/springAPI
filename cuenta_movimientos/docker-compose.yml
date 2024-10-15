@@ -1,0 +1,58 @@
+version: '3.9'
+
+services:
+  postgres-db-movimientos:
+    image: postgres:13
+    container_name: postgres-db-movimientos
+    environment:
+      POSTGRES_USER: user_movimientos
+      POSTGRES_PASSWORD: password_movimientos
+      POSTGRES_DB: movimientos_db
+    ports:
+      - "5434:5432"
+    volumes:
+      - postgres_data_movimientos:/var/lib/postgresql/data
+    networks:
+      - cliente_persona_network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "user_movimientos"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+
+  cuenta_movimientos:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: cuenta-movimientos
+    command: ["/integration_test.sh"]
+
+    ports:
+      - "8082:8082"
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres-db-movimientos:5432/movimientos_db
+      SPRING_DATASOURCE_USERNAME: user_movimientos
+      SPRING_DATASOURCE_PASSWORD: password_movimientos
+      SPRING_PROFILES_ACTIVE: docker
+      LOGGING_LEVEL_ROOT: DEBUG
+    depends_on:
+      postgres-db-movimientos:
+        condition: service_healthy
+      
+    networks:
+      - cliente_persona_network
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    volumes:
+      - ./cuenta_movimientos:/app
+      - /app/build/libs
+
+networks:
+  cliente_persona_network:
+    driver: bridge
+
+volumes:
+  postgres_data_movimientos:
