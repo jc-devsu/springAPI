@@ -62,9 +62,11 @@ Importante:
 
 - Primero debe crear un cliente y para poder crear una cuenta debe pasar un id valid de cliente, pues el sistema no permite crear cuentas si no estan vinculadas a un cliente valido.
 - No se pueden hacer movimientos si el saldo final es negativo, si no se mostrara el error respectivo.
+- Dado que se necesita llevar un registro de todas las transacciones exitosas, los movimientos no se pueden borrar ni modificar, pues no tendria sentido borrar una transaccion o modificarla, desde el punto de vista de la institución bancaria.
 - Reporte de movimientos por cliente, por fechas.
 - El archivo BancoAPI.postman_collection.json contiene la exportacion de las solicitudes postman para validar endpoints, ya se validan con la prueba de integración.
 - El archivo BaseDatos.sql contiene el script para generar las dos bases de datos, aunque no es necesario porque se generan en contenedores docker, si desea guardar los datos en guardados entre reincios de los contenedores de los microservicios,
   cambie la propiedad `spring.jpa.hibernate.ddl-auto=create` a `update` en los archivos `application.propierties` de cada microservicio.
+  
   
 
