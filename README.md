@@ -1,6 +1,25 @@
-####
+PRUEBA DE JAVA, ELABORAR API CON SPRING
 
-Para correr el proyecto, primero al directorio "cliente_persona" y corra el contenedor de su base de datos con el comando: 
+Implementación basica de API para un banco pequeño.
+
+Cada microservicio cuenta con su base de datos, y se comunican con llamadas asincronas.
+
+
+
+PASOS PARA CORRER EL PROYECTO:
+
+1) Instale docker desktop de aqui: `https://docs.docker.com/desktop/install/mac-install/`, luego corra docker desktop.
+
+
+
+2) Cree la red de docker con el comando:
+
+`docker network create cliente_persona_network`   
+
+
+
+
+3) Corra el microservicio "cliente_persona", para esto primero debe correr el contenedor de su base de datos con el comando: 
 
 `docker compose up postgres-db-cliente -d`
 
@@ -12,12 +31,16 @@ luego levante el contenedor del microservicio cliente_persona con el comando:
 
 `docker compose up`
 
-Este contenedor correra las pruebas unitarios contenidas en el directorio Test, donde se encuentra la prueba unitaria para el dominio Cliente.  Esto se hace corriendo las pruebas desde el Dockerfile del microservicio.
+NOTA: Este contenedor correra las pruebas unitarios contenidas en el directorio Test, donde se encuentra la prueba unitaria para el dominio Cliente.  Esto se hace corriendo las pruebas desde el Dockerfile del microservicio.
 
-#####
+Puede eliminar el contenedor con el comando:
+
+`docker compose down -v`  
 
 
-Seguidamente muevase al directorio "cuenta_movimiento" y corra el contenedor de su base de datos con el comando: 
+
+
+4) Corra el microservicio "cuenta_movimiento", para esto primero debe correr el contenedor de su base de datos con el comando: 
 
 `docker compose up postgres-db-movimientos -d`
 
@@ -29,9 +52,11 @@ luego levante el contenedor del microservicio cliente_persona con el comando:
 
 `docker compose up`
 
-Este contenedor correra la prueba de integracion contenida en el archivo `integration_test.sh`
+NOTA: Este contenedor correra la prueba de integracion contenida en el archivo `integration_test.sh`
 
-####
+
+
+
 
 Importante:
 
